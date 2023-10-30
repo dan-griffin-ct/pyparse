@@ -4,7 +4,7 @@ import argparse
 
 # sample text
 # note - working on building out parser to ingest text files
-submitted_text = "Lorem! ipsum? dolor: sit; amet, consectetur. adipiscing elit. Sed rutrum fringilla nibh, sed pharetra felis maximus vel. Vivamus eu imperdiet elit. Curabitur congue vestibulum ligula, eu ultrices arcu suscipit a. Cras vel mi odio. Etiam pretium sodales elit id luctus. Maecenas ac aliquam lorem, vel imperdiet mi. Aliquam imperdiet lacinia leo a posuere. Cras vitae lectus at neque interdum venenatis id nec diam. Nunc non odio imperdiet dui dignissim luctus. Maecenas tempus augue sit amet libero suscipit lacinia. Aliquam blandit, leo id ultrices porta, enim est tincidunt arcu, vitae lobortis ante ipsum in libero. Nam imperdiet facilisis dui ac lacinia. Morbi quis mauris sed tortor hendrerit eleifend. Cras aliquam ante et sem pulvinar mattis. Curabitur vel magna lacinia, porttitor arcu a, aliquet arcu. Maecenas aliquet laoreet eros, eu consequat ipsum.\
+submitted_text = "Lorem! ipsum? dolor: sit; amet, conse@ctetur. adipiscing elit. Sed rutrum fringilla nibh, sed pharetra felis maximus vel. Vivamus eu imperdiet elit. Curabitur congue vestibulum ligula, eu ultrices arcu suscipit a. Cras vel mi odio. Etiam pretium sodales elit id luctus. Maecenas ac aliquam lorem, vel imperdiet mi. Aliquam imperdiet lacinia leo a posuere. Cras vitae lectus at neque interdum venenatis id nec diam. Nunc non odio imperdiet dui dignissim luctus. Maecenas tempus augue sit amet libero suscipit lacinia. Aliquam blandit, leo id ultrices porta, enim est tincidunt arcu, vitae lobortis ante ipsum in libero. Nam imperdiet facilisis dui ac lacinia. Morbi quis mauris sed tortor hendrerit eleifend. Cras aliquam ante et sem pulvinar mattis. Curabitur vel magna lacinia, porttitor arcu a, aliquet arcu. Maecenas aliquet laoreet eros, eu consequat ipsum.\
 Aliquam at enim porttitor, lobortis quam eget, suscipit dui. Morbi varius condimentum leo, eget tempus lectus vulputate ac. Cras vel neque tincidunt, pulvinar ipsum et, rutrum ex. Nunc tempus rutrum porta. Mauris nec pellentesque magna. Donec volutpat libero sit amet nulla euismod, tristique aliquam purus hendrerit. Maecenas sed diam in massa sagittis aliquam vitae ac orci.\
 Donec odio nunc, mollis nec porttitor id, sodales ut ligula. Fusce ornare leo at suscipit ultrices. Pellentesque sit amet diam bibendum, bibendum elit nec, sagittis dolor. Suspendisse tempor, magna vitae interdum tristique, nulla libero gravida nulla, vel porttitor massa urna ac tellus. Praesent tortor ex, lobortis vel massa ac, ultrices consequat diam. Fusce tincidunt vehicula lorem, eget fermentum leo ultricies eget. Morbi condimentum, risus ut tincidunt fringilla, nulla urna ultricies eros, vel sagittis magna lectus vitae erat. Curabitur pulvinar vel ipsum vitae posuere. Aliquam et massa porttitor enim fermentum lacinia sed nec turpis.\
 Nulla sagittis malesuada augue, et pellentesque arcu faucibus in. Curabitur consectetur urna sed sapien varius, eu imperdiet lectus commodo. Donec sagittis mi leo, ut aliquam dolor mollis in. Duis pellentesque tincidunt dolor. Morbi dapibus tempor euismod. Quisque nec nisl consectetur, interdum mauris sit amet, viverra lorem. Mauris congue diam turpis, nec ultrices leo iaculis et. Vivamus euismod sem nec sapien vestibulum lobortis eget vel libero. Mauris eleifend bibendum erat nec elementum. Mauris at mauris consectetur, aliquam diam id, pharetra elit. Aenean rutrum risus eget dolor condimentum, id volutpat eros tristique. Donec egestas et justo in posuere. Nullam mattis hendrerit mauris. Sed eu justo mi. Praesent blandit dui ut imperdiet dictum.\
@@ -17,11 +17,11 @@ Donec sed ipsum eget risus gravida consectetur sed at massa. Mauris porta feliz 
 
 # allow user to decide if they want to include punctuation in end tally
 parser = argparse.ArgumentParser("pyparse")
-parser.add_argument("sanitize_punctuation", help="Passing True will exclude these characters from the count: ,.;:!?/\`")
+parser.add_argument("exclude_characters", nargs='?', default="T", help="Passing 'T' will exclude these characters from the count: ,.;:!?/\`@", )
 args = parser.parse_args()
 
 # convert str arg to boolean
-remove_punctuation = True if args.sanitize_punctuation == "T" else False
+remove_punctuation = True if args.exclude_characters == "T" else False
 
 print(f'remove_punctuation {remove_punctuation}')
 
@@ -40,7 +40,7 @@ print(f'word count: {word_count}')
 
 if remove_punctuation:
     # remove white space and commonly used punctuation from word list
-    sanitized_word_list = re.sub(r"[' ',.;:!?/\`]", "", submitted_text_lower_case)
+    sanitized_word_list = re.sub(r"[' ',.;:!?/\`@]", "", submitted_text_lower_case)
 else:
     print('false')
     # remove white space from word list
